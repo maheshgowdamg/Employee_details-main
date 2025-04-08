@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: deploy 
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+       - name: springapp
+         image: springapp:latest
+         ports:
+           - containerPort: 9000
+         imagePullPolicy: Never
+         env:
+           - name: spring.datasource.url
+             value: jdbc:postgresql://postgres:5432/mydatabase
+           - name: spring.datasource.username
+             value: postgres
+           - name: spring.datasource.password
+             value: root 
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: mysvc
+spec:
+  selector:
+    app: myapp
+  ports:
+  - port: 9000
+    targetPort: 9000
+    nodePort: 30070
+  type: NodePort
