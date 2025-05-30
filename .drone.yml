@@ -1,9 +1,11 @@
 kind: pipeline
 type: docker
-name: deploy
+name: default
 
 steps:
-- name: docker version
-  command:
-    - docker
-    - --version
+  - name: build
+    image: alpine
+    commands:
+      - echo "Starting build..."
+      - echo "Running tests or build commands here"
+      - echo "Build complete!"
