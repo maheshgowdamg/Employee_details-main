@@ -1,27 +1,15 @@
 kind: pipeline
 type: docker
-name: build-and-deploy
+name: default
 
 steps:
-  - name: build-jar
-    image: maven:latest
+  - name: build
+    image: docker
     commands:
-      - mvn clean package -DskipTests
+      - docker build -t myapp:latest .
 
-  - name: build-docker-image
-    image: plugins/docker
-    settings:
-      repo: maheshgowdamg25/springappemp
-      tags: latest
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-
-  - name: run-docker-compose
-    image: docker:20.10.24-dind
-    privileged: true
+  - name: deploy
+    image: docker
     commands:
       
-      - docker-compose down || true
       - docker-compose up -d
