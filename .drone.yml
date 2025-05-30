@@ -12,14 +12,14 @@ steps:
         path: /workspace
     working_dir: /workspace
     commands:
-      - docker-compose build springapp     # build only the springapp service image
-      - docker-compose up -d                # deploy all services in detached mode
+      - docker-compose build springapp
+      - docker-compose up -d
 
 volumes:
-  dockersock:
+  - name: dockersock
     host:
       path: /var/run/docker.sock
 
-  workspace:
+  - name: workspace
     host:
       path: .
