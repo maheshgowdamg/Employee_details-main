@@ -4,7 +4,7 @@ name: build-and-deploy
 
 steps:
   - name: build-jar
-    image: maven:3.8.7-openjdk-17
+    image: maven:latest
     commands:
       - mvn clean package -DskipTests
 
@@ -21,11 +21,7 @@ steps:
   - name: run-docker-compose
     image: docker:20.10.24-dind
     privileged: true
-    environment:
-      DOCKER_HOST: tcp://localhost:2375
-      DOCKER_TLS_CERTDIR: ""
     commands:
-      - apk add --no-cache docker-compose
-      - dockerd-entrypoint.sh & sleep 20
+      
       - docker-compose down || true
       - docker-compose up -d
