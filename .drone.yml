@@ -7,3 +7,22 @@ steps:
     image: maven:latest
     commands:
       - mvn clean package -DskipTests
+
+  - name: run docker-compose
+    image: docker/compose:latest
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+      - name: workspace
+        path: /drone/src
+    working_dir: /drone/src
+    commands:
+      - docker-compose up -d
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+  - name: workspace
+    host:
+      path: /drone/src
