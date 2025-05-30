@@ -1,26 +1,9 @@
 kind: pipeline
 type: docker
-name: local-deploy
+name: build
 
 steps:
-  - name: build image
-    image: docker:20.10
+  - name: build
+    image: maven:3.8.6-jdk-17
     commands:
-      - docker build -t springapp:latest .
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-
-  - name: deploy with docker-compose
-    image: docker/compose:latest
-    commands:
-      - docker-compose pull
-      - docker-compose up -d --build
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
+      - mvn clean package
