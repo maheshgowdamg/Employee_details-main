@@ -4,19 +4,19 @@ name: springapp-pipeline
 
 steps:
   - name: setup and test
-    image: docker/compose:1.29.2
-    volumes:
-      - name: docker-sock
-        path: /var/run/docker.sock
+    image: docker:20.10.16
+    environment:
+      DOCKER_HOST: tcp://localhost:2375
+      DOCKER_TLS_CERTDIR: ""
     commands:
+      - apk add --no-cache docker-cli docker-compose curl
       - docker-compose up -d
-      - sleep 20  # wait for services to be ready
+      - sleep 20  # Wait for app to become ready
       - docker-compose ps
-      # Optional: Add test steps here
-      # - curl http://localhost:9000/health
+      - curl --fail http://localhost:9000/actuator/health || echo "Health check failed"
       - docker-compose down
 
-volumes:
-  - name: docker-sock
-    host:
-      path: /var/run/docker.sock
+services:
+  - name: docker
+    image: docker:dind
+    privileged: true
