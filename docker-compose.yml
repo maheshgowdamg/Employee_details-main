@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     image: springapp
     container_name: myapp
+    restart: always
     ports:
       - "9000:9000"
     depends_on:
@@ -19,6 +20,7 @@ services:
   postgres:
     image: postgres:15
     container_name: mypostgress
+    restart: always
     ports:
      - "5432:5432"
     environment:
