@@ -4,4 +4,6 @@ name: deploy
 
 steps:
 - name: docker version
-  command: docker --version
+  command:
+    - docker
+    - --version
