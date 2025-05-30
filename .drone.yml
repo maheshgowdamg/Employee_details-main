@@ -4,6 +4,6 @@ name: build
 
 steps:
   - name: build
-    image: maven:3.8.6-jdk-17
+    image: maven:latest
     commands:
       - mvn clean package
