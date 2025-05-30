@@ -13,7 +13,7 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
-      - name: workspace
+      - name: drone-workspace
         path: /drone/src
     working_dir: /drone/src
     commands:
@@ -23,6 +23,6 @@ volumes:
   - name: dockersock
     host:
       path: /var/run/docker.sock
-  - name: workspace
+  - name: drone-workspace
     host:
       path: /drone/src
