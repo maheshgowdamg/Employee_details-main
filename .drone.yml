@@ -3,23 +3,5 @@ type: docker
 name: deploy
 
 steps:
-  - name: build and deploy
-    image: docker/compose:latest
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-      - name: workdir
-        path: /workspace
-    working_dir: /workspace
-    commands:
-      - docker-compose build springapp
-      - docker-compose up -d
-
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
-
-  - name: workdir
-    host:
-      path: .
+- name: docker version
+  command: docker --version
