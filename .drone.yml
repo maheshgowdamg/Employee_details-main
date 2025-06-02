@@ -1,15 +1,24 @@
 kind: pipeline
 type: docker
-name: default
+name: springappemp-ci-cd
 
 steps:
-  - name: build
-    image: docker
+  - name: build-springboot-app
+    image: maven:latest
     commands:
-      - docker build -t myapp:latest .
+      - echo "Building Spring Boot application with Maven..."
+      - mvn clean package -DskipTests
 
-  - name: deploy
-    image: docker
+  - name: deploy-using-docker-compose
+    image: docker/compose:1.29.2
+    volumes:
+      - name: docker_socket
+        path: /var/run/docker.sock
     commands:
-      
-      - docker-compose up -d
+      - echo "Starting services with Docker Compose..."
+      - docker-compose up -d --build
+
+volumes:
+  - name: docker_socket
+    host:
+      path: /var/run/docker.sock
