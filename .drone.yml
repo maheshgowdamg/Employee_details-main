@@ -6,7 +6,7 @@ steps:
   - name: build-springboot-app
     image: maven:latest
     commands:
-      - echo "Building Spring Boot application with Maven..."
+      - echo "Building Spring application with Maven..."
       - mvn clean package -DskipTests
 
   - name: deploy-using-docker-compose
