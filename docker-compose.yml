@@ -30,7 +30,7 @@ services:
     networks:
       - my-network
     volumes:
-       - /home/ubuntu/backup:/var/lib/postgresql/data
+       - /home/ec2-user/backup:/var/lib/postgresql/data
 # volumes:
 #   pgdata: {}
 
