@@ -30,9 +30,9 @@ services:
     networks:
       - my-network
     volumes:
-       - pgdata:/var/lib/postgresql/data
-volumes:
-  pgdata: {}
+       - /home/ubuntu/backup:/var/lib/postgresql/data
+# volumes:
+#   pgdata: {}
 
 networks:
    my-network:
